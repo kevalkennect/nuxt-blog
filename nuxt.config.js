@@ -19,7 +19,7 @@ export default {
       },
     ],
   },
-
+  loading: { color: "red" },
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [],
 
@@ -43,7 +43,9 @@ export default {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
     baseURL: "/",
   },
+  transition: {},
 
+  serverMiddleware: {},
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
 };
