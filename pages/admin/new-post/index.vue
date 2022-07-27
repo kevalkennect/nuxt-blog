@@ -1,32 +1,39 @@
 <template>
   <div class="admin-new-post-page">
     <section class="new-post-form">
-      <AdminPostFrom @submit="onSubmitted" />
+      <AdminPostForm @submit="onSubmitted" />
     </section>
   </div>
 </template>
 
 <script>
-import AdminPostFrom from "@/components/Admin/AdminPostForm.vue";
 import axios from "axios";
+import AdminPostForm from "@/components/Admin/AdminPostForm";
+
 export default {
+  layout: "admin",
   components: {
-    AdminPostFrom,
+    AdminPostForm
   },
   methods: {
     onSubmitted(postData) {
-      axios
-        .post(
-          "https://nuxt-blog-5d708-default-rtdb.firebaseio.com/posts.json",
-          postData
-        )
-        .then((data) => {
-          console.log(data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    },
-  },
+      this.$store.dispatch("addPost", postData).then(() => {
+        this.$router.push("/admin");
+      });
+    }
+  }
 };
 </script>
+
+<style scoped>
+.new-post-form {
+  width: 90%;
+  margin: 20px auto;
+}
+
+@media (min-width: 768px) {
+  .new-post-form {
+    width: 500px;
+  }
+}
+</style>

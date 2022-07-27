@@ -3,10 +3,12 @@
     <section class="post">
       <h1 class="post-title">{{ loadedPost.title }}</h1>
       <div class="post-details">
-        <div class="post-detail">Last updated on {{ loadedPost.updated }}</div>
-        <div class="post-detail">Written by {{  loadedPost.author }}</div>
+        <div class="post-detail">
+          Last updated on {{ loadedPost.updatedDate }}
+        </div>
+        <div class="post-detail">Written by {{ loadedPost.author }}</div>
       </div>
-      <p class="post-content">{{  loadedPost.content }}</p>
+      <p class="post-content">{{ loadedPost.content }}</p>
     </section>
     <section class="post-feedback">
       <p>
@@ -18,21 +20,29 @@
     </section>
   </div>
 </template>
+
 <script>
+import axios from "axios";
+
 export default {
   asyncData(context) {
-    return {
-      loadedPost: {
-        id: "1",
-        title: `somthing ${context.params.id}`,
-        content: "asfdkashvfdkasdfvads ga gdasf gadfsg adfghdrfa hdfhdfa ",
-        updated: "asdfasdfasdfasf",
-        author: "Keval Panchal",
-      },
-    };
+    return axios
+      .get(
+        "https://nuxt-blog-5d708-default-rtdb.firebaseio.com/posts/" +
+          context.params.id +
+          ".json"
+      )
+      .then((res) => {
+        return {
+          loadedPost: res.data,
+        };
+      })
+      .catch((e) => context.error(e));
   },
 };
 </script>
+
+
 <style scoped>
 .single-post-page {
   padding: 30px;
@@ -86,4 +96,3 @@ export default {
   color: salmon;
 }
 </style>
-
